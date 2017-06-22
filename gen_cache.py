@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import os, sys, json, getopt, logging
 from binascii import hexlify
 from TitleInfo import TitleInfo
@@ -18,6 +19,7 @@ with open('encTitleKeys.bin', 'rb') as f:
 
 # Dictionary to store scraped data to turn into json
 json_data = {}
+feature_data = {}
 
 
 def filter_titles(titles):
@@ -44,7 +46,9 @@ def scrape():
 		else:
 			try:
 				title_data = TitleInfo(titles[i], uid)
-				json_data[titles[i]] = title_data.to_array()
+				temp_flist_data = title_data.take_my_flist()
+				for key, value in temp_flist_data.items():
+					feature_data[key] = value
 				print("Title {} out of {}: [{}] {}".format(i+1, len(uid_list), title_data.product_code, title_data.name))
 			except ValueError as e:
 				logging.warn(e)
@@ -52,9 +56,8 @@ def scrape():
 			except KeyboardInterrupt:
 				break
 
-	common.icon_manager.save()
-	with open('data.json', 'w') as f:
-		json.dump(json_data, f, separators=(',', ':'))
+	with open('features.json', 'w') as f:
+		json.dump(feature_data, f, separators=(',', ':'))
 
 
 def load_cache(input_dir):
