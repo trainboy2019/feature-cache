@@ -1,5 +1,6 @@
 language: python
 sudo: false
+
 python:
 - '3.5'
 
@@ -10,20 +11,22 @@ addons:
     packages:
     - g++-6
 
+before_install:
+- openssl aes-256-cbc -K $encrypted_6038fd128472_key -iv $encrypted_6038fd128472_iv
+  -in private.tar.enc -out private.tar -d
+
 install:
 - pip install -r requirements.txt
 - wget -q https://github.com/Cruel/3dstex/releases/download/1.1/3dstex-linux-x64
 - wget -q $TITLEKEYSURL -O encTitleKeys.bin
 - wget -q $PREVCACHEURL -O cache.tar.gz
-- echo -e $CTRCERT > ctr-common-1.crt
-- echo -e $CTRKEY > ctr-common-1.key
 - chmod +x 3dstex-linux-x64
 - mkdir -p cache
 - tar -xaf cache.tar.gz -C cache
 
 script:
-- ./gen_cache.py -i cache
-- ./3dstex-linux-x64 -bro etc1 images/*.png
+- "./gen_cache.py -i cache"
+- "./3dstex-linux-x64 -bro etc1 images/*.png"
 
 before_deploy:
 - export RELEASE_FILENAME=cache-$TRAVIS_TAG
@@ -33,12 +36,12 @@ before_deploy:
 
 branches:
   only:
-    - /^r.*/
-    
+  - "/^r.*/"
+
 deploy:
   provider: releases
   api_key:
-    secure: wnfktGRjYfTgk6stabfydX1CJQkm20Bc/Yh1EQ4i5IrZfbUflQ/3w80FnZRHMBh7rUMIeQK7nAWrMlTyygQfrnEswRfMiqlciiFuAU3UznAob6jjesgxDeCR0u2VChfPvuB4XaENKmd6z1Q1tVy6+OmhRoG41zlORYNwO9lbGmLaTsi7OhERATXHzxFXaN0VLzrCLOupfxKZQloRDF2sx3z7Bs0ctIPAkJGkEppn2u7MY+tJkrx73ymB5o/D5XmAHnsKSIGSDxmZbTXlx82i8E1JWwUojVp2d8t4Ag8mRaKVulBPAj8vMfLr5Ug5ABl8oQDoPT0K2kosAFT1KuPJbH7w7cXqGIOf6QiLc4kxB5fQ0DhzdLf1gAD04DXhPevn/zAgZQC8AVgau1vJWAv0omNpso6YTE5cMyYyPwWlgRgo5k8k8Kup3b3ev7qrO0K5aOWgXJrb55Bi1JZ/mFBbO3jtDJ6uh+XgXJgThls25OpQB8eBd3KvqpfBoxNmZTiSe0sLw4oJiDD8XorjDf6CyW65R0y+jSIgncRW9moTgszCnqKUf9S5obG3SYgCTYwYZxGuChNREgLxd2i6R1SyDoeWQpmfO5gJBWNdMaqrco0dIVD6hOxXFP0WG8U9mWaxyShy+E6tZw+nyTJsKysbwN4Q5gK6GLujKC3Qa6KJUnY=
+    secure: muKPjoab9eStD7eIdcURSRkvuU7N2Bqkt6b6/Xd1BB2zd5VOezi5zH9yE2/wbuXuoksLMT8dGrvEmMuyLaKTj+WJqtHqupZUXsyMElL+9wxlq8V08z6bpY9uvUHGjMPdouu4htuSqlrYz135pig7IEj02ubaYPY98VxKSCpbcEGrRDOnWw8qbWpa4xqEfXdgp0q65MTng/0wLtp9DjHOBxc77DWhgC76erihfuv19YLtgNTqLLGapft3Dqvo51gjQ0doNU6xZdNkfZFKzqWE05sIVA3G/q+4ADe/T2+g+WJrJePXSOmg9FleGpGAK7xqbV4S23D/kjlTV7DoQ8LmPvdVDdnjtecma/2kkQadaoYWcq5cLfiuFgNipViu/jFx0Dikd8Z1h6cM5dmiWDckWxZ+iX1GnV5XOZVN8vSuSEQHm1Mrg1sFT2KMjPIEry/qEBIzI4MbSo2woownAYJOUG/K6LjgM5nXoBdxqZ95WS9SzWBvQaHSW8FYrPVNIBLoQlnrZuzKoRN8yOYNxMzmM9fEKyvggs7T5Yb3EmpczQfM/N6XRcrJrjrUkWPCwHHmZ+iANT39OX6LkbyHEL4lDBaTWXhSAaqNu/nYFajAG8nnci+tmPSdWPuUvKdS1uZoqJo+b+sT29PuqLdzmM3iM+KTuhHFRk55sl7XzhpTBbE=
   file:
     - $RELEASE_FILENAME-jpg.tar.gz
     - $RELEASE_FILENAME-png.tar.gz
