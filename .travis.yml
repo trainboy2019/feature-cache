@@ -12,8 +12,8 @@ addons:
     - g++-6
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_6038fd128472_key -iv $encrypted_6038fd128472_iv
-  -in private.tar.enc -out private.tar -d
+- openssl aes-256-cbc -K $encrypted_6038fd128472_key -iv $encrypted_6038fd128472_iv -in private.tar.enc -out private.tar -d
+- tar xf private.tar
 
 install:
 - pip install -r requirements.txt
@@ -41,7 +41,7 @@ branches:
 deploy:
   provider: releases
   api_key:
-    secure: muKPjoab9eStD7eIdcURSRkvuU7N2Bqkt6b6/Xd1BB2zd5VOezi5zH9yE2/wbuXuoksLMT8dGrvEmMuyLaKTj+WJqtHqupZUXsyMElL+9wxlq8V08z6bpY9uvUHGjMPdouu4htuSqlrYz135pig7IEj02ubaYPY98VxKSCpbcEGrRDOnWw8qbWpa4xqEfXdgp0q65MTng/0wLtp9DjHOBxc77DWhgC76erihfuv19YLtgNTqLLGapft3Dqvo51gjQ0doNU6xZdNkfZFKzqWE05sIVA3G/q+4ADe/T2+g+WJrJePXSOmg9FleGpGAK7xqbV4S23D/kjlTV7DoQ8LmPvdVDdnjtecma/2kkQadaoYWcq5cLfiuFgNipViu/jFx0Dikd8Z1h6cM5dmiWDckWxZ+iX1GnV5XOZVN8vSuSEQHm1Mrg1sFT2KMjPIEry/qEBIzI4MbSo2woownAYJOUG/K6LjgM5nXoBdxqZ95WS9SzWBvQaHSW8FYrPVNIBLoQlnrZuzKoRN8yOYNxMzmM9fEKyvggs7T5Yb3EmpczQfM/N6XRcrJrjrUkWPCwHHmZ+iANT39OX6LkbyHEL4lDBaTWXhSAaqNu/nYFajAG8nnci+tmPSdWPuUvKdS1uZoqJo+b+sT29PuqLdzmM3iM+KTuhHFRk55sl7XzhpTBbE=
+    secure: QrEQzXPVttiZyCsE9s0JkbykAvBCSE5asSq+/dfuXpQ5Wy3ivTezDtDWbY6jAo6V0ChydqYwW2bpRuCi8dw+BEPnmuhZbL70xqxTHgNUQgw9KWdQV7M56BUwT2Wa5m7tEqJcn1US/lf0/0ss/PSN8SU8uPfZAM+x1URelmHSy6d5pMycXksg9mtwkcLIXMO+8s/f00aT1A5LbmfFr8IRj6A9es7yrSgAu0N3Y9fbW1hUuogz7mOqH6f/XdX/CKgLHJk0jlruaauQ0/+w9DuGivaqCKCYLo11RbkVfdEAB/4JT6NVIdX3+D6p/6nLn5S+a1I8swVunKGs8291RqntEIJwRV/hywAA9Ny9ftw3bcpIv/gk7+fMBROZpne0JZcsX9+W2uoA+wc3tHrIXd0e0lxsvELm5oPFoG50wtlXzH6mP/Ew54YLGlzBxhYptEmWeIT9YXkINhRqtG9CBtzi+zUM3wiE/q1kGVVq1vUV1ByxrQGI2Gs4e4Q2MxKqzaommi6OwIQFRD4XAvPd3+KJTmvTN+/Ze5MHzJUcemrJWHxfFNpRbE532dZ7lKCjWcfUuNc9eE43vIT7HaHC9yXPmgxNhXCK/oT99rHcGWbWNMSvVitjSpeanfmuzJx3hG1S5mx6TJ1aAZejZZuOJEzumvoDtSFY8fs0hHSBSyITm+I=
   file:
     - $RELEASE_FILENAME-jpg.tar.gz
     - $RELEASE_FILENAME-png.tar.gz
@@ -49,4 +49,4 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    repo: Repo3DS/shop-cache
+    repo: altCache/feature-cache
